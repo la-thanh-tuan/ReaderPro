@@ -136,6 +136,12 @@
   font-style: italic;
 }
 
+.translator-success {
+  color: #28a745;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .language-info {
   display: flex;
   align-items: center;
@@ -149,4 +155,89 @@
 
 .lang-arrow {
   color: #0078d4;
+}
+
+.translator-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-button {
+  background: #0078d4;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex: 1;
+}
+
+.action-button:hover {
+  background: #106ebe;
+  transform: translateY(-1px);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+.action-button.save-btn {
+  background: #28a745;
+}
+
+.action-button.save-btn:hover {
+  background: #218838;
+}
+
+.action-button.saved {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.action-button.saved:hover {
+  background: #6c757d;
+  transform: none;
+}
+
+.saved-words-btn {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.saved-words-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.saved-words-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 8px;
+}
+
+.saved-word-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.saved-word-item:last-child {
+  border-bottom: none;
+}
+
+.saved-word-item .original-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2px;
+}
+
+.saved-word-item .translated-text {
+  font-size: 11px;
+  color: #0078d4;
+  font-weight: 500;
 }

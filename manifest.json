@@ -5,7 +5,8 @@
   "description": "Instantly translate selected text with Metro-style popup interface",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "https://x142xfvk-7027.asse.devtunnels.ms/*"

@@ -5,6 +5,7 @@ class SmartTranslator {
     this.selectedText = '';
     this.isTranslating = false;
     this.currentSelection = null;
+    this.currentTranslation = null;
     
     this.init();
   }
@@ -167,6 +168,7 @@ class SmartTranslator {
   displayTranslation(data) {
     if (!this.popup) return;
     
+    this.currentTranslation = data;
     const content = this.popup.querySelector('.translator-content');
     content.innerHTML = `
       <div class="translator-text">
@@ -182,7 +184,23 @@ class SmartTranslator {
         <span class="lang-arrow">→</span>
         <span>${data.targetLanguage.toUpperCase()}</span>
       </div>
+      <div class="translator-actions">
+        <button class="action-button save-btn" id="save-word-btn">💾 Save Word</button>
+        <button class="action-button saved-words-btn" id="view-saved-btn">📖 Saved</button>
+      </div>
     `;
+    
+    // Add event listeners for action buttons
+    this.popup.querySelector('#save-word-btn').addEventListener('click', () => {
+      this.saveTranslation(data);
+    });
+    
+    this.popup.querySelector('#view-saved-btn').addEventListener('click', () => {
+      this.showSavedWords();
+    });
+    
+    // Check if this word is already saved
+    this.checkIfSaved(data);
   }
 
   displayError(message) {
@@ -202,6 +220,138 @@ class SmartTranslator {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  async saveTranslation(data) {
+    try {
+      const key = data.originalText.toLowerCase().trim();
+      const savedWords = await this.getSavedWords();
+      
+      if (savedWords[key]) {
+        this.showMessage('Word already saved!', 'error');
+        return;
+      }
+      
+      savedWords[key] = {
+        original: data.originalText,
+        translated: data.translatedText,
+        sourceLanguage: data.sourceLanguage,
+        targetLanguage: data.targetLanguage,
+        savedAt: new Date().toISOString()
+      };
+      
+      await chrome.storage.local.set({ 'readerProSavedWords': savedWords });
+      
+      // Update button state
+      const saveBtn = this.popup.querySelector('#save-word-btn');
+      saveBtn.textContent = '✅ Saved';
+      saveBtn.classList.add('saved');
+      saveBtn.disabled = true;
+      
+      this.showMessage('Word saved successfully!', 'success');
+    } catch (error) {
+      console.error('Error saving word:', error);
+      this.showMessage('Failed to save word', 'error');
+    }
+  }
+
+  async getSavedWords() {
+    try {
+      const result = await chrome.storage.local.get(['readerProSavedWords']);
+      return result.readerProSavedWords || {};
+    } catch (error) {
+      console.error('Error getting saved words:', error);
+      return {};
+    }
+  }
+
+  async checkIfSaved(data) {
+    try {
+      const savedWords = await this.getSavedWords();
+      const key = data.originalText.toLowerCase().trim();
+      
+      if (savedWords[key]) {
+        const saveBtn = this.popup.querySelector('#save-word-btn');
+        saveBtn.textContent = '✅ Saved';
+        saveBtn.classList.add('saved');
+        saveBtn.disabled = true;
+      }
+    } catch (error) {
+      console.error('Error checking saved status:', error);
+    }
+  }
+
+  async showSavedWords() {
+    try {
+      const savedWords = await this.getSavedWords();
+      const wordsArray = Object.values(savedWords);
+      
+      if (wordsArray.length === 0) {
+        this.showMessage('No saved words yet', 'error');
+        return;
+      }
+      
+      const content = this.popup.querySelector('.translator-content');
+      content.innerHTML = `
+        <div class="translator-text">
+          <div class="text-label">Saved Words (${wordsArray.length})</div>
+          <div class="saved-words-list">
+            ${wordsArray.slice(-5).reverse().map(word => `
+              <div class="saved-word-item">
+                <div class="original-text">${this.escapeHtml(word.original)}</div>
+                <div class="translated-text">${this.escapeHtml(word.translated)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="translator-actions">
+          <button class="action-button" id="back-btn">← Back</button>
+          <button class="action-button" id="clear-saved-btn">🗑️ Clear All</button>
+        </div>
+      `;
+      
+      // Add event listeners
+      this.popup.querySelector('#back-btn').addEventListener('click', () => {
+        this.displayTranslation(this.currentTranslation);
+      });
+      
+      this.popup.querySelector('#clear-saved-btn').addEventListener('click', () => {
+        this.clearSavedWords();
+      });
+    } catch (error) {
+      console.error('Error showing saved words:', error);
+      this.showMessage('Failed to load saved words', 'error');
+    }
+  }
+
+  async clearSavedWords() {
+    try {
+      await chrome.storage.local.set({ 'readerProSavedWords': {} });
+      this.showMessage('All saved words cleared!', 'success');
+      setTimeout(() => {
+        this.hidePopup();
+      }, 1000);
+    } catch (error) {
+      console.error('Error clearing saved words:', error);
+      this.showMessage('Failed to clear saved words', 'error');
+    }
+  }
+
+  showMessage(message, type) {
+    if (!this.popup) return;
+    
+    const content = this.popup.querySelector('.translator-content');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `translator-${type}`;
+    messageDiv.textContent = message;
+    
+    content.appendChild(messageDiv);
+    
+    setTimeout(() => {
+      if (messageDiv.parentNode) {
+        messageDiv.parentNode.removeChild(messageDiv);
+      }
+    }, 2000);
   }
 }
 
