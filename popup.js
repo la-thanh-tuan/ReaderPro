@@ -9,7 +9,7 @@ function initializePopup() {
   checkExtensionStatus();
   
   // Add any interactive features here if needed
-  console.log('Smart Translator popup initialized');
+  console.log('Reader Pro popup initialized');
 }
 
 function checkExtensionStatus() {

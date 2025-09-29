@@ -8,7 +8,7 @@ class TranslationService {
   init() {
     // Listen for extension installation
     chrome.runtime.onInstalled.addListener(() => {
-      console.log('Smart Translator extension installed');
+      console.log('Reader Pro extension installed');
     });
 
     // Listen for messages from content script

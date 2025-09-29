@@ -1,4 +1,4 @@
-// Content script for Smart Translator Chrome Extension
+// Content script for Reader Pro Chrome Extension
 class SmartTranslator {
   constructor() {
     this.popup = null;
@@ -68,7 +68,7 @@ class SmartTranslator {
     
     this.popup.innerHTML = `
       <div class="translator-header">
-        <div class="translator-title">Smart Translator</div>
+        <div class="translator-title">Reader Pro</div>
         <button class="translator-close" title="Close">×</button>
       </div>
       <div class="translator-content">

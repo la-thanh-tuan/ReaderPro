@@ -1,4 +1,4 @@
-# Smart Translator Chrome Extension
+# Reader Pro Chrome Extension
 
 ## Overview
 A Chrome extension that provides instant text translation using an existing backend API. Features Metro-style UI design with smooth animations and popup interface.

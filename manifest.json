@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Smart Translator",
+  "name": "Reader Pro",
   "version": "1.0.0",
   "description": "Instantly translate selected text with Metro-style popup interface",
   "permissions": [
@@ -22,7 +22,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Smart Translator"
+    "default_title": "Reader Pro"
   },
   "icons": {
     "16": "icons/icon-16.png",

@@ -52,7 +52,7 @@ const server = http.createServer((req, res) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Translator - Chrome Extension Development</title>
+    <title>Reader Pro - Chrome Extension Development</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -131,7 +131,7 @@ const server = http.createServer((req, res) => {
 </head>
 <body>
     <div class="header">
-        <h1>🌐 Smart Translator</h1>
+        <h1>🌐 Reader Pro</h1>
         <p>Chrome Extension Development Server</p>
     </div>
 
@@ -164,7 +164,7 @@ const server = http.createServer((req, res) => {
         
         <div class="step">
             <span class="step-number">5.</span>
-            The Smart Translator extension should now appear in your extensions list
+            The Reader Pro extension should now appear in your extensions list
         </div>
     </div>
 
@@ -264,7 +264,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Smart Translator Development Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Reader Pro Development Server running at http://localhost:${PORT}`);
   console.log('📦 Chrome Extension files are ready for installation');
   console.log('🌐 Open the URL above for installation instructions');
 });
