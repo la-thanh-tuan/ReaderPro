@@ -9,6 +9,9 @@ A Chrome extension that provides instant text translation using an existing back
 - Built Metro-style UI with modern design principles
 - Added API integration with translation endpoint
 - Created development server for testing and installation
+- **Added save word functionality with Chrome storage integration**
+- **Implemented saved words viewer with clear all feature**
+- **Enhanced popup with save/view action buttons**
 
 ## User Preferences
 - Requested Metro-style UI/UX design
@@ -52,6 +55,13 @@ A Chrome extension that provides instant text translation using an existing back
 - Auto-detection of source language
 - Error handling and retry logic
 
+**Save Words Feature**
+- Save translated words/phrases to local Chrome storage
+- View saved words list (latest 5 entries)
+- Prevent duplicate entries
+- Clear all saved words functionality
+- Persistent storage across browser sessions
+
 ### Metro Design System
 - Color scheme: Blue (#0078d4) primary, dark backgrounds for popups
 - Typography: Segoe UI font family, various weights and sizes
@@ -82,7 +92,10 @@ A Chrome extension that provides instant text translation using an existing back
 2. Select text with mouse/cursor
 3. Translation popup appears automatically above selection
 4. View original and translated text
-5. Click elsewhere or press ESC to close popup
+5. **Click "💾 Save Word" to save translation for later**
+6. **Click "📖 Saved" to view previously saved words**
+7. **Use "Clear All" to remove all saved words**
+8. Click elsewhere or press ESC to close popup
 
 ## Technical Features
 - Cross-origin API requests with proper CORS handling
